@@ -39,11 +39,14 @@ function startListening() {
         console.log("Listening started.");
         statusText.textContent = "Listening...";
 
-        // 🔊 AI introduces itself
-        speak("   Hello! I am your voice assistant. I am now listening.");
+        // 🔊 AI introduces itself only the first time
+        if (!hasIntroduced) {
+            speak("Hello! I am your voice assistant. I am now listening.");
+            hasIntroduced = true;
+        }
     } catch (error) {
-        // console.error("Error starting recognition:", error);
-        // statusText.textContent = "Error: Could not start listening.";
+        console.error("Error starting recognition:", error);
+        statusText.textContent = "Error: Could not start listening.";
     }
 }
 
