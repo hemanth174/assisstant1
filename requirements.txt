@@ -2,3 +2,5 @@ flask
 gunicorn
 wikipedia
 pyjokes
+datetime
+pytz
