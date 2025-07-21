@@ -1,10 +1,18 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import datetime
 import wikipedia
 import pyjokes
+import pytz
+
 from urllib.parse import quote
+from flask_session import Session
+
+
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 
 def process_command(command):
     """Processes the voice command and returns a response object."""
@@ -17,9 +25,14 @@ def process_command(command):
         response_data["text"] = f"Sure, playing {song} on YouTube for you."
         response_data["action_url"] = youtube_url
 
+    # elif "time" in command:
+    #     time = datetime.datetime.now().strftime('%I:%M %p')
+    #     response_data["text"] = f"It’s {time} ⏰"
+
     elif "time" in command:
-        time = datetime.datetime.now().strftime('%I:%M %p')
-        response_data["text"] = f"It’s {time} ⏰"
+        ist = pytz.timezone('Asia/Kolkata')
+        time = datetime.datetime.now(ist).strftime('%I:%M %p')
+        response_data["text"] = f"It’s {time} (IST) ⏰"
 
     elif "who is" in command:
         person = command.replace("who is", "").strip()
@@ -49,7 +62,8 @@ def process_command(command):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    name = session.get('name', '')
+    return render_template('index.html', name=name)
 
 @app.route("/ask", methods=["POST"])
 def ask():
@@ -57,6 +71,11 @@ def ask():
     command = data.get("command", "")
     response_data = process_command(command)
     return jsonify(response_data)
-
+@app.route("/register", methods=["POST"])
+def register():
+    data = request.get_json()
+    name = data.get("name", "")
+    session['name'] = name
+    return jsonify({"name": name})
 if __name__ == "__main__":
     app.run(debug=True)
