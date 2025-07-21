@@ -8,18 +8,24 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <!-- <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-mic-fill" viewBox="0 0 16 16">
                 <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z"/>
                 <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
             </svg>
         </a>
+        <div class = "toggle">
         <button class="navbar-toggler" type="button" id="openSidebarBtn">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon">
+                
+            </span>
+           
         </button>
+        </div>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
@@ -27,14 +33,45 @@
                 <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
             </ul>
         </div>
-    </nav>
-
-    <div id="sidebar" class="sidebar">
-        <span id="closeSidebarBtn" class="close-btn">&times;</span>
+    </nav> -->
+ <!-- <div id="sidebar" class="sidebar">
+        
+        <span id="closeSidebarBtn" class="close-btn"> 
+            <div class="A">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="10" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+</svg>
+</div>
+</span>
         <a href="#">Home</a>
         <a href="#">Features</a>
         <a href="#">Pricing</a>
-    </div>
+    </div> -->
+      <header>
+        <nav class="navbar">
+            <div class="logo">
+               <!-- <img src="{{ url_for('static', filename='image/photo.jpg') }}" class = "img1"> -->
+                <div class = "img1">
+                    
+                </div>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <div class="hamburger-icon-">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" fill="currentColor" class="bi bi-list hamburger-icon-svg" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+</svg>
+                </div>
+                </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+   
 
     <div class="container">
         <h1>GIRI Voice Assistant 💡</h1>
@@ -52,7 +89,35 @@
         <p id="user-command"></p>
         <p id="giri-response"></p>
     </div>
+ <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.getElementById('navToggle'); // Hamburger icon
+    const navLinks = document.getElementById('navLinks');   // The sidebar itself
+    const navbar = document.querySelector('.navbar');       // The main header navbar
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn'); // The 'X' inside the sidebar
 
+    function toggleSidebar() {
+        navbar.classList.toggle('open');
+        navLinks.classList.toggle('open');
+    }
+
+    // Open sidebar when hamburger is clicked
+    navToggle.addEventListener('click', toggleSidebar);
+
+    // Close sidebar when the 'X' inside the sidebar is clicked
+    sidebarCloseBtn.addEventListener('click', toggleSidebar);
+
+    // Optional: Close nav when a link inside the sidebar is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            // Only close if it's not the 'X' button itself (though sidebarCloseBtn handler takes care of it)
+            if (link.parentElement !== sidebarCloseBtn) {
+                toggleSidebar();
+            }
+        });
+    });
+});
+ </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
